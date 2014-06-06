@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Se Connecter{% endblock %}
+{% block body %}
+<body id="login-body">
+  <div class="login-header">
+    <div id="logo" class="center"></div>
+  </div>
+  <div id="login">
+    <div class="lock">
+      <i class="icon-lock"></i>
+    </div>
+    <div class="control-wrap">
+      <h4>S'identifier</h4>
+      <form id="loginform" class="form-vertical no-padding no-margin" action="" method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ field.errors }}
+        <div class="control-group">
+          <div class="controls">
+            <div class="input-prepend">
+              {{ form.username.errors }}<span class="add-on"><i class="icon-user"></i></span>{{form.username}}
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <div class="input-prepend">
+              {{ form.password.errors }}<span class="add-on"><i class="icon-key"></i></span>{{form.password}}
+            </div>
+            <div class="mtop10">
+            </div>
+            <div class="clearfix space5"></div>
+          </div>
+        </div>
+    </div>
+    <input type="submit" id="login-btn" class="btn btn-block btn btn-success" value="Connexion" />
+    <a href="/user/register" class="btn btn-block btn-danger">Inscription</a>
+    <a href="/contact" class="btn btn-block btn-info">Contactez nous </a>
+    </form>
+  </div>
+</body>                     
+{% endblock %}

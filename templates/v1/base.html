@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="fr" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="fr" class="ie9"> <![endif]-->
+<!--[if !IE]><!--><html lang="fr"> <!--<![endif]-->
+<head>
+   <meta charset="utf-8" />
+   <title>{% block title %}{% endblock %} - 42.fr</title>
+   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+   {% block css %}{% include "css.html" %}{% endblock %}
+</head>
+{% block body %}
+<body class="fixed-top">
+  {% block header %}{% include "header.html" %}{% endblock %}
+  <div id="container" class="row-fluid">
+    {% block menu %}{% include "menu.html" %}{% endblock %}
+    {% block content %}{% endblock %}
+   </div>
+ {% block footer %}{% include "footer.html" %}{% endblock %}
+ {% block js %}{% include "js.html" %}{% endblock %}
+</body>
+{% endblock %}
+</html>

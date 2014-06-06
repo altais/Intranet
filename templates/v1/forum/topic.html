@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{topic.title}}{% endblock %}
+{% block content %}
+{% load staticfiles %}
+<div id="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <h3 class="page-title">Forum</h3>
+        <ul class="breadcrumb">
+          <li><a href="/user/profile"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/forum">Forum</a><span class="divider">&nbsp;</span></li>
+          <li><a href="/forum">{{categorie}}</a><span class="divider">&nbsp;</span></li>
+          <li><a href="{% url 'forum.views.forum' forum.pk %}">{{forum.title}}</a><span class="divider">&nbsp;</span></li>
+          <li><a href="#">{{topic.title}}</a><span class="divider-last">&nbsp;</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="span12">
+      <div id="page">
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="widget" id="">
+              <div class="widget-title">
+                <h4><i class="icon-comments-alt"></i> {{ topic.title }}</h4>
+                <span class="tools">
+                  <a href="javascript:;" class="icon-chevron-down"></a>
+                  <a href="javascript:;" class="icon-remove"></a>
+                </span>
+              </div>
+              <div class="widget-body">
+                <div class="timeline-messages">
+                  {% for post in posts %}
+                  <div class="msg-time-chat">
+                    <a href="#" class="message-img"><img class="avatar" src=" {% static "v1/img/avatar1.jpg" %}" alt=""></a>
+                    <div class="message-body msg-in">
+                      <div class="text">
+                        <p class="attribution"><a href="#">{{ post.creator}}</a> le {{ post.created }}</p>
+                        <p><pre>{{ post.body }}</pre></p>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="chat-form">
+                  <form action="{% url "forum.views.new_post" %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-cont">
+                     <textarea class="span10" rows="5" name="body"></textarea>
+                      <input type="hidden" name="pk" value="{{topic.pk}}">
+                    </div>
+                    <div class="btn-cont"><input type="submit" class="btn btn-primary" value="Valider" /></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

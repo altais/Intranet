@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Forum{% endblock %}
+{% block content %}
+<div id="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <h3 class="page-title">Forum</h3>
+        <ul class="breadcrumb">
+          <li><a href="/user/profile"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/forum">Forum</a><span class="divider-last">&nbsp;</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        {% for categorie in categories %}
+        <div class="widget">
+            <div class="widget-title">
+                <h4><i class="icon-globe"></i>{{ categorie.title}}</h4>
+                <span class="tools">
+                  <a href="javascript:;" class="icon-chevron-down"></a>
+                  <a href="javascript:;" class="icon-remove"></a>
+                </span>                    
+              </div>
+              <div class="widget-body">
+                  <table class="table table-bordered table-hover">
+                    <tbody>
+                      {% for forum in forums %}
+                        {% if forum.Categorie == categorie %}
+                          <tr>
+                            <td><a href="{% url 'forum.views.forum' forum.pk %}">{{ forum.title }}</a></td>
+                          </tr>
+                        {%endif%}
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
