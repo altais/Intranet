@@ -78,8 +78,8 @@ DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.mysql', 
        'NAME': 'intranet',
-       'USER': 'cedric',
-       'PASSWORD': '',
+       'USER': 'root',
+       'PASSWORD': '', 
        'HOST': 'localhost',
        'PORT': '3306',
    }
@@ -109,7 +109,7 @@ LOGIN_REDIRECT_URL = "/user/profile/"
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'contact@hosting4all.fr'
+EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
@@ -121,10 +121,11 @@ AUTH_LDAP_GLOBAL_OPTIONS = {
  ldap.OPT_X_TLS_REQUIRE_CERT: False,
  ldap.OPT_REFERRALS: False,
 }
+LDAP_USER = "" # entrez votre username
+AUTH_LDAP_BIND_PASSWORD = "" # entrez votre mdp
 
 AUTH_LDAP_SERVER_URI = "ldap://ldap.42.fr"
-AUTH_LDAP_BIND_DN = "cn=ccervant,ou=2013,ou=people,dc=42,dc=fr"
-AUTH_LDAP_BIND_PASSWORD = ""
+AUTH_LDAP_BIND_DN = "cn="+ LDAP_USER + ",ou=2013,ou=people,dc=42,dc=fr"
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=2013,ou=people,dc=42,dc=fr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)")
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s,ou=2013,ou=people,dc=42,dc=fr"
 AUTH_LDAP_START_TLS = True

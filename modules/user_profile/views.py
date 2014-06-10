@@ -1,10 +1,10 @@
 from django.shortcuts import render
 import ldap
-from intranet.settings import AUTH_LDAP_BIND_PASSWORD
+from intranet.settings import AUTH_LDAP_BIND_PASSWORD, LDAP_USER
 from django.http import Http404
 def list(request, login):
 	l = ldap.initialize("ldaps://ldap.42.fr:636/")
-	l.simple_bind_s("uid=ccervant,ou=2013,ou=people,dc=42,dc=fr", AUTH_LDAP_BIND_PASSWORD )
+	l.simple_bind_s("uid=" + LDAP_USER + ",ou=2013,ou=people,dc=42,dc=fr", AUTH_LDAP_BIND_PASSWORD )
 	basedn = "ou=2013,ou=people,dc=42,dc=fr"
 	filter = "(uid=" + login + ")"
 	results = l.search_s(basedn,ldap.SCOPE_SUBTREE,filter)
