@@ -9,8 +9,8 @@ def list(request, login):
 	filter = "(uid=" + login + ")"
 	results = l.search_s(basedn,ldap.SCOPE_SUBTREE,filter)
 	if results == []:
-		error = True
-		raise Http404
+		profil_error = True
+		return render(request, 'user/dashboard.html', locals())
 	uid = results[0][1]['uid'][0]
 	name = results[0][1]['first-name'][0]
 	lastname = results[0][1]['last-name'][0]

@@ -24,6 +24,12 @@
               </span>                    
           </div>
           <div class="widget-body">
+          {% if profil_error == True%}
+            <div class="alert alert-error">
+              <button class="close" data-dismiss="alert">×</button>
+              <strong>Erreur!</strong> Le Profil est introuvable !
+            </div>
+          {% endif %}
             <h1> Dashboad de {{user}}</h1>
           </div>
         </div>

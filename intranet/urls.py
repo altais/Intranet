@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^news/', include('news.urls')),
     url(r'^contact/$', 'contact.views.contact'),
     url(r'^projects/', include('projects.urls')),
+    url(r'^calendar/', include('calendars.urls')),
 )

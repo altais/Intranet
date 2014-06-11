@@ -33,10 +33,10 @@
                 <div class="timeline-messages">
                   {% for post in posts %}
                   <div class="msg-time-chat">
-                    <a href="#" class="message-img"><img class="avatar" src="https://cdn.42.fr/userprofil/icon/{{ post.creator}}.jpg" alt=""></a>
+                    <a href="/user/profile/{{ post.creator}}" target="_blank" class="message-img"><img class="avatar" src="https://cdn.42.fr/userprofil/icon/{{ post.creator}}.jpg" alt=""></a>
                     <div class="message-body msg-in">
                       <div class="text">
-                        <p class="attribution"><a href="#">{{ post.creator}}</a> le {{ post.created }}</p>
+                        <p class="attribution"><a href="/user/profile/{{ post.creator}}" target="_blank">{{ post.creator}}</a> le {{ post.created }}</p>
                         <p><pre>{{ post.body }}</pre></p>
                       </div>
                     </div>

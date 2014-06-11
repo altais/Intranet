@@ -1,24 +1,14 @@
-from string import join
-from PIL import Image as PImage
-from os.path import join as pjoin
-
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import get_object_or_404, render_to_response, render
-from django.core.context_processors import csrf
-from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.forms import ModelForm
-from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
-from intranet.settings import MEDIA_ROOT, MEDIA_URL
 from forum.models import *
-from forum.forms import *
 
 def main(request):
-    categorie = Categorie.objects.all()
+    categories = Categorie.objects.all()
     forums = Forum.objects.all()
-    return render(request, "forum/list.html", dict(forums=forums, categories=categorie))
+    return render(request, "forum/list.html", locals())
 
 def forum(request, pk):
     topic = Topic.objects.filter(forum=pk).order_by("-created")
@@ -27,7 +17,6 @@ def forum(request, pk):
     return render(request, "forum/forum.html", dict(topics=topic, pk=pk, forum=forum, categorie=categorie.title))
 
 def topic(request, pk):
-    """Listing of posts in a topic."""
     post = Post.objects.filter(topic=pk).order_by("created")
     topic = Topic.objects.get(pk=pk)
     forum = Forum.objects.get(title=topic.forum)
