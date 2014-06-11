@@ -105,7 +105,7 @@ TEMPLATE_DIRS = (
 )
 
 LOGIN_URL = "/user/login/"
-LOGIN_REDIRECT_URL = "/user/profile/"
+LOGIN_REDIRECT_URL = "/user/dashboard/"
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
