@@ -10,6 +10,17 @@
             </a>
             <div class="top-nav ">
                <ul class="nav pull-right top-menu" >
+                    <li class="dropdown mtop5">
+                       <div class="control-group">
+                            <div class="controls">
+                                <form action="/user/profile/{{login}}/" class="form-horizontal" method="POST">
+                                {% csrf_token %}
+                                    <input type="text" placeholder="Rechercher un eleve" class="input-medium" name="login"/>
+                                    <input type="submit" class="btn btn-info" value="Valider" />
+                                </form>
+                            </div>
+                        </div>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="https://cdn.42.fr/userprofil/icon/{{user}}.jpg" alt=""><span class="username">{{user}}</span><b class="caret"></b></a>
                         <ul class="dropdown-menu">

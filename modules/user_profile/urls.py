@@ -4,4 +4,5 @@ from django.views.generic import TemplateView
 
 urlpatterns = patterns('user_profile.views',
     url(r"^/(\w+)/$", "list"),
+    url(r"^/$", "list"),
 )
