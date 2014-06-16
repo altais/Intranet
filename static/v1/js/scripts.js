@@ -325,6 +325,7 @@ var App = function () {
                     $(this).remove();
                 }
             },
+
             events: [{
                 title: 'All Day Event',
                 start: new Date(y, m, 1),

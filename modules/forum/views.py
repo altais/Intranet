@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 
 from forum.models import *
+from forum.forms import *
 
 def main(request):
     categories = Categorie.objects.all()
