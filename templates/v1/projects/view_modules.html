@@ -6,9 +6,9 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12">
-        <h3 class="page-title">Projets</h3>
+        <h3 class="page-title">Mes Modules</h3>
         <ul class="breadcrumb">
-          <li><a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
           <li><a href="#">Mes Projets</a><span class="divider-last">&nbsp;</span></li>
         </ul>
       </div>
@@ -34,15 +34,17 @@
                 </tr>
               </thead>
               {% for module in modules_inscrit%}
-              <tbody>
                 <tr>
                   <td width="20%">{{module.name}}</td>
                   <td width="20%">{{module.start_signup}} <br/> {{module.end_signup}}</td>
                   <td width="20%">{{module.start_module}} <br/> {{module.end_module}}</td>
-                  <td width="20%"><a href="{% url "projects.views.module" type=2 slug=module.slug %}" class="btn btn-danger" >Se Désinscire</a></td>
-                  <td width="10%"><a href="{% url "projects.views.list_projects" slug=module.slug %}" class="btn btn-success">Details </a></td>
+                  <td width="20%">
+                    {% if time.date > module.end_signup.date %}<a href="#" class="btn disabled" >Se Désinscire</a>{%else%}<a href="{% url "inscription" type="deluser_module" slug=module.slug %}" class="btn btn-danger">Se Désinscire</a>{%endif%}
+                  </td>
+                  <td width="10%"><a href="{% url "list_projects" slug=module.slug %}" class="btn btn-success">Details </a></td>
                 </tr>
               </tbody>
+
               {%endfor %}
             </table>
           </div>
@@ -72,8 +74,10 @@
                   <td width="30%">{{module.name}}</td>
                   <td width="20%">{{module.start_signup}} <br/> {{module.end_signup}}</td>
                   <td width="20%">{{module.start_module}} <br/> {{module.end_module}}</td>
-                  <td width="10%"><a href="{% url "projects.views.module" type=1 slug=module.slug %}" class="btn btn-success">S'inscire </a></td>
-                  <td width="10%"><a href="{% url "projects.views.list_projects" slug=module.slug %}" class="btn btn-success">Details </a></td>
+                  <td width="10%">
+                       {% if time.date > module.end_signup.date %}<a href="#" class="btn disabled" >S'inscire</a>{%else%}<a href="{% url "inscription" type="adduser_module" slug=module.slug %}" class="btn btn-success" >S'inscrire</a>{%endif%}
+                  </td>
+                  <td width="10%"><a href="{% url "list_projects" slug=module.slug %}" class="btn btn-success">Details </a></td>
                 </tr>
                 </tbody>
                 {%endfor %}

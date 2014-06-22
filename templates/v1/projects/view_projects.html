@@ -6,10 +6,11 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12">
-        <h3 class="page-title">Projets</h3>
+        <h3 class="page-title">{{module.name}} - Projets</h3>
         <ul class="breadcrumb">
-          <li><a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-          <li><a href="#">Mes Projets</a><span class="divider-last">&nbsp;</span></li>
+          <li><a href="/"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/projects">Mes Projets</a><span class="divider">&nbsp;</span></li>
+          <li><a href="#">{{module.name}}</a><span class="divider-last">&nbsp;</span></li>
         </ul>
       </div>
     </div>
@@ -23,8 +24,13 @@
                     <div class="metro-overview turquoise-color clearfix">
                       <div class="display"><i class="icon-group"></i><div class="percent">{{place}} / {{module.place_available}}</div></div>
                       <div class="details">
-                         <div class="numbers">Inscription : Ouverte</div>
-                         <div class="title">{%if inscrit == "True"%}<a href="{% url "projects.views.module" type=2 slug=module.slug %}" class="btn btn-danger" >Se Désinscire</a> {%else %} <a href="{% url "projects.views.module" type=1 slug=module.slug %}" class="btn btn-success">S'inscire </a>{%endif%}</div>
+                      {% if time.date > module.end_signup.date %}
+                         <div class="numbers">Inscription : Fermé</div>
+                         <div class="title">{%if inscrit == "True"%}<a href="#" class="btn disabled" >Se Désinscire</a> {%else %} <a href="#" class="btn disabled">S'inscire </a>{%endif%}</div>
+                      {%else%}
+                      <div class="numbers">Inscription : Ouverte</div>
+                         <div class="title">{%if inscrit == "True"%}<a href="{% url "inscription" type="deluser_module" slug=module.slug %}" class="btn btn-danger" >Se Désinscire</a> {%else %} <a href="{% url "inscription" type="adduser_module" slug=module.slug %}" class="btn btn-success">S'inscire </a>{%endif%}</div>
+                      {%endif%}
                       </div>
                       <div class="progress progress-info">
                         <div style="width:{{pourcentage}}%" class="bar"></div>
@@ -61,9 +67,9 @@
                 <tr>
                   <td width="30%">{{project.name}}</td>
                   <td width="20%">{{project.start_signup}} <br/> {{project.end_signup}}</td>
-                  <td width="20%">{{project.start_module}} <br/> {{project.end_module}}</td>
-                  <td width="20%"><a href="{% url "projects.views.module" type=2 slug=module.slug %}" class="btn btn-danger" >Se Désinscire</a></td>
-                  <td width="10%"><a href="{% url "projects.views.view_project" slug_module=module.slug slug_project=project.slug %}" class="btn btn-success">Details </a></td>
+                  <td width="20%">{{project.start_project}} <br/> {{project.end_project}}</td>
+                  <td width="20%"><a href="{% url "inscription" type="deluser_group" slug=project.slug %}" class="btn btn-danger" >Se Désinscire</a></td>
+                  <td width="10%"><a href="{% url "view_project" slug_module=module.slug slug_project=project.slug %}" class="btn btn-success">Details </a></td>
                 </tr>
               </tbody>
               {%endfor %}
@@ -96,8 +102,8 @@
                   <td width="30%">{{project.name}}</td>
                   <td width="20%">{{project.start_signup}} <br/> {{project.end_signup}}</td>
                   <td width="20%">{{project.start_module}} <br/> {{project.end_module}}</td>
-                  <td width="10%"><a href="{% url "projects.views.module" type=1 slug=module.slug %}" class="btn btn-success">S'inscire </a></td>
-                  <td width="10%"><a href="{% url "projects.views.view_project" slug_module=module.slug slug_project=project.slug %}" class="btn btn-success">Details </a></td>
+                  <td width="10%"><a href="{% url "inscription" type="adduser_group" slug=project.slug %}" class="btn btn-success">S'inscire </a></td>
+                  <td width="10%"><a href="{% url "view_project" slug_module=module.slug slug_project=project.slug %}" class="btn btn-success">Details </a></td>
                 </tr>
               </tbody>
               {%endfor %}

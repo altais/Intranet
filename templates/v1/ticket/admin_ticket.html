@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Ticket{% endblock %}
+{% block content %}
+{% if user.is_active and user.is_staff %}
+<div id="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <h3 class="page-title">Ticket</h3>
+        <ul class="breadcrumb">
+          <li><a href="/"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="#">Ticket</a> <span class="divider-last">&nbsp;</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+       <a class="btn btn-success" href= "/ticket/new_ticket">Nouveau Ticket</a>
+        <div class="widget">
+          <div class="widget-title"><h4><i class="icon-comments-alt"></i>Mes Tickets</h4>
+              <span class="tools">
+                  <a href="javascript:;" class="icon-chevron-down"></a>
+                  <a href="javascript:;" class="icon-remove"></a>
+              </span>                    
+          </div>
+          <div class="widget-body">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Service</th>
+                  <th>Objet</th>
+                  <th>État</th>
+                  <th>Dernière mis à jour</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {%for ticket in tickets %}
+                <tr>
+                  <td> {{ticket.created_on}}</td>
+                  <td>{{ticket.service}}</td>
+                  <td><a href="{% url "ticket.views.view_ticket" ticket.id %}">{{ticket.subject}}</a></td>
+                  <td>{{ticket.status}}</td>
+                  <td>{{ticket.updated_on}}</td>
+                  <td><a href="{% url "ticket.views.view_ticket" ticket.id %}" class="btn btn-success">Details</td>
+                  <td>{%if ticket.status != "Fermé"%}<a href="{% url "ticket.views.close_ticket" ticket.id %}" class="btn btn-danger">Fermer le ticket</a></td>{%else%}<button class="btn disabled">Ticket fermé</button>{%endif%}
+                </tr>
+              {% empty %}
+              <div class="alert alert-info"> Vous n'avez aucun tickets</div>
+              {%endfor%}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

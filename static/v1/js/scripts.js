@@ -327,7 +327,7 @@ var App = function () {
             },
 
             events: [{
-                title: 'All Day Event',
+                title: '',
                 start: new Date(y, m, 1),
                 className: 'label label-default',
             }, {
@@ -336,13 +336,11 @@ var App = function () {
                 end: new Date(y, m, d - 2),
                 className: 'label label-success',
             }, {
-                id: 999,
                 title: 'Repeating Event',
                 start: new Date(y, m, d - 3, 16, 0),
                 allDay: false,
                 className: 'label label-default',
             }, {
-                id: 999,
                 title: 'Repeating Event',
                 start: new Date(y, m, d + 4, 16, 0),
                 allDay: false,

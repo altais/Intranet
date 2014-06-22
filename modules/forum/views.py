@@ -23,6 +23,7 @@ def topic(request, pk):
     forum = Forum.objects.get(title=topic.forum)
     categorie = Categorie.objects.get(title=forum.Categorie)
     return render(request, "forum/topic.html", dict(posts=post, pk=pk, topic=topic, forum=forum, categorie=categorie.title))
+
 @login_required
 def create_topic(request):
     if request.method == 'POST':

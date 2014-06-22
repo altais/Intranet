@@ -40,7 +40,6 @@ class Module(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=100)
     size = models.DecimalField(max_digits=2, decimal_places=0)
     user = models.ManyToManyField(User)
     project = models.ForeignKey(Projects,  related_name="group_project")

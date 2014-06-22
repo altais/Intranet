@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Ticket{% endblock %}
+{% block content %}
+<div id="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <h3 class="page-title">Ticket</h3>
+        <ul class="breadcrumb">
+          <li><a href="/"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/ticket">Ticket</a> <span class="divider">&nbsp;</span></li>
+          <li><a href="#">{{ticket.subject}}</a> <span class="divider-last">&nbsp;</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget">
+          <div class="widget-title"><h4><i class="icon-comments-alt"></i>{{ticket.subject}}</h4>
+              <span class="tools">
+                  <a href="javascript:;" class="icon-chevron-down"></a>
+                  <a href="javascript:;" class="icon-remove"></a>
+              </span>                    
+          </div>
+          <div class="widget-body">
+            <ul class="chats normal-chat">
+                <li class="in">
+                    <img class="avatar" alt="" src="https://cdn.42.fr/userprofil/icon/{{ ticket.creator}}.jpg" />
+                    <div class="message ">
+                    <span class="arrow"></span><a href="#" class="name">{{ticket.creator}}, </a><span class="datetime">le {{ticket.created_on}}</span>
+                    <span class="body">{{ticket.description}}  </span>
+                </div>
+              </li>
+              {%for reply in ticket.reply.all%}
+              {%if user == reply.user%}<li class="in">{%else%}<li class="out">{%endif%}
+                <img class="avatar" alt="" src="https://cdn.42.fr/userprofil/icon/{{ reply.user}}.jpg" />
+                <div class="message ">
+                  <span class="arrow"></span><a href="#" class="name">{{reply.user}}, </a><span class="datetime">le {{reply.date}}</span>
+                  <span class="body">{{reply.reply}}  </span>
+                </div>
+              </li>
+              {%endfor%}
+            </ul>
+            {%if ticket.status != "Fermé"%}
+            <div class="chat-form">
+                  <form action="{% url "ticket.views.new_post" %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-cont">
+                     <textarea class="span10" rows="5" name="reply"></textarea>
+                      <input type="hidden" name="id" value="{{ticket.id}}">
+                    </div>
+                    <div class="btn-cont"><input type="submit" class="btn btn-primary" value="Valider" /></div>
+                  </form>
+            </div>
+            {%endif%}
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

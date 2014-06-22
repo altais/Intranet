@@ -1,10 +1,27 @@
 from django.db import models
-                                                                                                                                                                                        
-class evenement(models.Model):
-    title = models.CharField(max_length=255)
-    start = models.DateTimeField(auto_now=False)
-    end = models.DateTimeField(auto_now=False)
-    url = models.CharField(max_length=255)
-    allDay = models.TextField(default=False)
+from django.utils.translation import ugettext_lazy as _
+
+class Calendar(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    slug = models.SlugField(_('slug'), unique=True)
+
     def __unicode__(self):
-		return self.title
+        return u'%s' % self.name
+
+    class Meta:
+        verbose_name = _('calendar')
+        ordering = ['name']
+
+class Event(models.Model):
+    title = models.CharField(_('title'), max_length=100)
+    start = models.DateTimeField(_('start'))
+    end = models.DateTimeField(_('start'))
+
+    calendar = models.ForeignKey(Calendar)
+
+    def __unicode__(self):
+        return u'%s' % self.title
+
+    class Meta:
+        verbose_name = _('event')
+        ordering = ['start', 'end']

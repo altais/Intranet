@@ -6,38 +6,40 @@
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="span12">
-        <h3 class="page-title">Projets</h3>
+        <h3 class="page-title">{{module.name}} - {{project.name}} - Details </h3>
         <ul class="breadcrumb">
-          <li><a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
-          <li><a href="#">Mes Projets</a><span class="divider-last">&nbsp;</span></li>
+          <li><a href="/"><i class="icon-home"></i></a><span class="divider">&nbsp;</span></li>
+          <li><a href="/projects">Mes Projets</a><span class="divider">&nbsp;</span></li>
+          <li><a href="/projects/{{module.slug}}">{{module.name}}</a><span class="divider">&nbsp;</span></li>
+          <li><a href="#">{{project.name}}</a><span class="divider-last">&nbsp;</span></li>
         </ul>
       </div>
     </div>
     <div class="row-fluid">
       <div class="span12">
-        <div class="widget">
-            <div class="widget-title"><h4><i class="icon-globe"></i>{{module.name}}</h4></div>
-            <div class="widget-body">
-                <div class="row-fluid metro-overview-cont">
-                  <div data-desktop="span2" data-tablet="span4" class="span2 responsive">
-                    <div class="metro-overview turquoise-color clearfix">
-                      <div class="display"><i class="icon-group"></i><div class="percent">{{place}} / {{module.place_available}}</div></div>
-                      <div class="details">
-                         <div class="numbers">Inscription : Ouverte</div>
-                         <div class="title">{%if inscrit == "True"%}<a href="" class="btn btn-danger" >Se Désinscire</a> {%else %} <a href="" class="btn btn-success">S'inscire </a>{%endif%}</div>
-                      </div>
-                      <div class="progress progress-info">
-                        <div style="width:{{pourcentage}}%" class="bar"></div>
-                      </div>
-                    </div>
-                 </div>
-               </div>
-            </div>
+        <div class="row-fluid">
+        {%if inscrit == True %}
+          <a href="{% url "inscription" type="deluser_group" slug=project.slug %}" class="icon-btn span2"><i class="icon-group"></i>
+            <div>Se Désinscire</div>
+            <span class="badge badge-info">{{place}} / {{project.place_available}}</span>
+           </a>
+        {%else%}
+           <a href="{% url "inscription" type="adduser_group" slug=project.slug %}" class="icon-btn span2"><i class="icon-group"></i>
+            <div>Creer un groupe</div>
+            <span class="badge badge-info">{{place}} / {{project.place_available}}</span>
+           </a>
+        {%endif%}
         </div>
+        <div class="alert alert-info">
+         <strong>Informations :</strong><br/>
+       </div>
+       <div class="alert">
+         <strong>Sujet :</strong><br/>
+       </div>
       </div>
     </div>
     <div class="row-fluid">
-      <div class="span6">
+      <div class="span8">
         <div class="widget widget-tabs">
            <div class="widget-title">
               <h4><i class="icon-reorder"></i>Tabs</h4>
@@ -45,19 +47,30 @@
            <div class="widget-body">
               <div class="tabbable portlet-tabs">
                  <ul class="nav nav-tabs">
-                    <li><a href="#portlet_tab3" data-toggle="tab">Tab 3</a></li>
-                    <li><a href="#portlet_tab2" data-toggle="tab">Tab 2</a></li>
-                    <li class="active"><a href="#portlet_tab1" data-toggle="tab">Tab 1</a></li>
+                    <li><a href="#portlet_tab3" data-toggle="tab">Notes</a></li>
+                    <li><a href="#portlet_tab2" data-toggle="tab">Corrections</a></li>
+                    <li class="active"><a href="#portlet_tab1" data-toggle="tab">Groupes</a></li>
                  </ul>
                  <div class="tab-content">
                     <div class="tab-pane active" id="portlet_tab1">
-                       <p>
-                          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-                           Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-                       </p>
-                       <p>
-                          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.  sed diam nonummy nibh euismod.
-                       </p>
+                      <div class="widget-body">
+                        <div class="accordion" id="accordion1">
+                          {%for group in groups%}
+                          <div class="accordion-group">
+                            <div class="accordion-heading">
+                              <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#{{group.pk}}" href="#{{group.pk}}"><i class=" icon-plus"></i>{{group.name}}</a>
+                            </div>
+                            <div id="{{group.pk}}" class="accordion-body collapse ">
+                              <div class="accordion-inner">
+                                {%for username in group.user.all %}
+                                  {{username}}
+                                {%endfor%}
+                              </div>
+                            </div>
+                          </div>
+                          {%endfor%}
+                        </div>
+                      </div>
                     </div>
                     <div class="tab-pane" id="portlet_tab2">
                        <p>
@@ -80,36 +93,19 @@
            </div>
         </div>
       </div>
-      <div class="span6">
-        <div class="widget">
-          <div class="widget-title"><h4><i class="icon-globe"></i>Non Inscrit</h4>
-            <span class="tools">
-              <a href="javascript:;" class="icon-chevron-down"></a>
-              <a href="javascript:;" class="icon-remove"></a>
-            </span>                    
-          </div>
-          <div class="widget-body">
-            <table class="table table-bordered table-hover">
-              <thead>
-                <tr>
-                  <th>Projet</th>
-                  <th>Debut/fin inscription</th>
-                  <th>debut/Fin module</th>
-                  <th>Actions</th>
-                  <th>Details</th>
-                </tr>
-              </thead>
-              {% for project in project_non_inscrit%}
-              <tbody>
-                <tr>
-                  <td width="30%">{{project.name}}</td>
-                  <td width="20%">{{project.start_signup}} <br/> {{project.end_signup}}</td>
-                  <td width="20%">{{project.start_module}} <br/> {{project.end_module}}</td>
-
-              </tbody>
-              {%endfor %}
-            </table>
-          </div>
+      <div class="span4">
+        <div class="widget widget-tabs">
+           <div class="widget-title">
+              <h4><i class="icon-reorder"></i>Informations</h4>
+           </div>
+           <div class="widget-body">
+           <i>Inscription</i><br/>
+           Debut des inscriptions le : {{project.start_signup}}<br/>
+           Fin des inscriptions le : {{project.end_signup}} <br/>
+           <i>Projet</i><br/>
+           Debut du projet le : {{project.start_project}}<br/>
+           Fin du projet le : {{project.end_project}}<br/>
+           </div>
         </div>
       </div>
     </div>
